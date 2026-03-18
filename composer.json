@@ -1,0 +1,42 @@
+{
+    "name": "ogkit/ogkit-laravel",
+    "description": "OgKit for Laravel",
+    "keywords": ["laravel", "ogkit"],
+    "license": "MIT",
+    "require": {
+        "php": "^8.2",
+        "illuminate/contracts": "^12.0 || ^13.0",
+        "illuminate/support": "^12.0 || ^13.0"
+    },
+    "require-dev": {
+        "larastan/larastan": "^3.0",
+        "orchestra/testbench": "^10.0 || ^11.0",
+        "orchestra/workbench": "^10.0 || ^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "OgKit\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "OgKit\\Tests\\": "tests/",
+            "Workbench\\App\\": "workbench/app/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "OgKit\\OgKitServiceProvider"
+            ],
+            "aliases": {
+                "OgKit": "OgKit\\Facades\\OgKit"
+            }
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
