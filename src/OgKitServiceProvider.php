@@ -2,6 +2,7 @@
 
 namespace OgKit;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class OgKitServiceProvider extends ServiceProvider
@@ -22,5 +23,13 @@ class OgKitServiceProvider extends ServiceProvider
                 __DIR__.'/../config/ogkit.php' => config_path('ogkit.php'),
             ], 'ogkit-config');
         }
+
+        Blade::directive('ogMeta', function ($expression) {
+            return "<?php echo app('ogkit')->meta($expression); ?>";
+        });
+
+        Blade::directive('ogPreview', function () {
+            return "<?php echo app('ogkit')->previewScript(); ?>";
+        });
     }
 }
