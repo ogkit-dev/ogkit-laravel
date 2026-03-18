@@ -28,6 +28,18 @@ class OgKitServiceProvider extends ServiceProvider
             return "<?php echo app('ogkit')->meta($expression); ?>";
         });
 
+        Blade::directive('ogTemplate', function ($expression) {
+            if (trim((string) $expression) === '') {
+                return '<template data-og-template>';
+            }
+
+            return "<?php echo app('ogkit')->template($expression); ?>";
+        });
+
+        Blade::directive('endOgTemplate', function () {
+            return '</template>';
+        });
+
         Blade::directive('ogPreview', function () {
             return "<?php echo app('ogkit')->previewScript(); ?>";
         });

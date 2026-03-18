@@ -105,6 +105,16 @@ class OgKitTest extends TestCase
         $this->assertStringContainsString('<meta property="og:type" content="article" />', $html);
     }
 
+    public function test_template_wraps_html_in_og_template_tag(): void
+    {
+        $html = OgKit::template('<div class="card">Hello</div>');
+
+        $this->assertEquals(
+            '<template data-og-template><div class="card">Hello</div></template>',
+            $html
+        );
+    }
+
     public function test_preview_script_renders_in_local_environment(): void
     {
         $this->app->detectEnvironment(fn () => 'local');
@@ -138,6 +148,21 @@ class OgKitTest extends TestCase
         $compiled = $this->app['blade.compiler']->compileString("@ogMeta('Title', 'Desc', 'https://example.com')");
 
         $this->assertStringContainsString("app('ogkit')->meta('Title', 'Desc', 'https://example.com')", $compiled);
+    }
+
+    public function test_blade_og_template_directive_compiles_without_expression(): void
+    {
+        $compiled = $this->app['blade.compiler']->compileString("@ogTemplate\n<div>Hello</div>\n@endOgTemplate");
+
+        $this->assertStringContainsString('<template data-og-template>', $compiled);
+        $this->assertStringContainsString('</template>', $compiled);
+    }
+
+    public function test_blade_og_template_directive_compiles_with_expression(): void
+    {
+        $compiled = $this->app['blade.compiler']->compileString("@ogTemplate('<div>Hello</div>')");
+
+        $this->assertStringContainsString("app('ogkit')->template('<div>Hello</div>')", $compiled);
     }
 
     public function test_blade_og_preview_directive_compiles(): void

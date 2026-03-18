@@ -1,2 +1,3 @@
 providers:
+  - OgKit\OgKitServiceProvider
   - Workbench\App\Providers\WorkbenchServiceProvider

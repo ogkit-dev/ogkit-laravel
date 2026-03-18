@@ -4,6 +4,11 @@ namespace OgKit;
 
 class OgKit
 {
+    public function template(string $html): string
+    {
+        return '<template data-og-template>'.$html.'</template>';
+    }
+
     public function url(string $pageUrl): string
     {
         $apiKey = config('ogkit.api_key');

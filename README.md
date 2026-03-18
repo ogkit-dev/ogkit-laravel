@@ -22,6 +22,45 @@ php artisan vendor:publish --tag=ogkit-config
 
 ## Usage
 
+### OG template
+
+Use the `@ogTemplate` Blade directives anywhere in your page body to define the HTML that OG Kit should render:
+
+```blade
+<body>
+    <article>
+        <h1>{{ $post->title }}</h1>
+        <p>{{ $post->excerpt }}</p>
+    </article>
+
+    @ogTemplate
+        <div class="w-full h-full bg-slate-900 text-white p-16 flex flex-col justify-end">
+            <p class="text-xl opacity-80">{{ config('app.name') }}</p>
+            <h1 class="mt-6 text-6xl font-bold">{{ $post->title }}</h1>
+            <p class="mt-4 text-2xl">{{ $post->excerpt }}</p>
+        </div>
+    @endOgTemplate
+</body>
+```
+
+OG Kit renders this template from the page itself, so it has access to the same Blade variables, CSS, fonts, images, and other assets or resources that are already available on your site.
+
+This outputs:
+
+```html
+<template data-og-template>
+    ...
+</template>
+```
+
+If you need to build the template string in PHP first, you can also use the facade directly:
+
+```php
+use OgKit\Facades\OgKit;
+
+$template = OgKit::template('<div class="w-full h-full">Hello</div>');
+```
+
 ### Meta tags
 
 Use the `@ogMeta` Blade directive in your `<head>` to render all the Open Graph and Twitter Card meta tags:
@@ -64,6 +103,15 @@ Use the `@ogPreview` directive to load the OG Kit preview script. It only output
 ```
 
 Then append `?ogkit-render` to any URL to see your OG image template rendered at 1200x630px.
+
+For package development with Workbench:
+
+```bash
+OGKIT_API_KEY=your-api-key \
+OGKIT_BASE_URL=http://127.0.0.1:8001/img/ \
+APP_URL=http://127.0.0.1:8000 \
+./vendor/bin/testbench serve --host=127.0.0.1 --port=8000
+```
 
 ### URL generation
 
