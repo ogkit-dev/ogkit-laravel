@@ -1,6 +1,6 @@
 {
     "name": "ogkit/ogkit-laravel",
-    "description": "OgKit for Laravel",
+    "description": "OG Kit for Laravel",
     "keywords": ["laravel", "ogkit"],
     "license": "MIT",
     "require": {
